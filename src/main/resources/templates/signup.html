@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<link rel="stylesheet" href="/styles/sign_form.css">
+</head>
+
+<body>
+	<form id="signup_form" name="user" th:action="@{/signup}" method="post" onsubmit="return check()">
+		<div class="container">
+			<div id="msg"></div>
+			<h2 th:text="#{signup.text}"></h2>
+			<div ><span th:text="#{signup.username}" ></span>
+				<input type="text" name="username" th:placeholder="#{signup.user.text}" pattern="[a-zA-Z0-9_]+"
+					required="required" >
+			</div>
+			<div>Email
+				<input type="text" name="email" placeholder="example@gmail.com" pattern="[a-z0-9@._]+"
+					required="required">
+			</div>
+			<div ><span th:text="#{signup.password}"></span>
+				<input type="password" name="password" id="password" pattern="[a-zA-Z0-9]{8,}"
+					th:placeholder="#{signup.password.text}" required="required">
+			</div>
+			<div ><span th:text="#{signup.confirm}"></span>
+				<input type="password" id="confirm-password" pattern="[a-zA-Z0-9]{8,}"
+					th:placeholder="#{signup.password.text}" required="required" onkeyup="check()">
+			</div>
+			<input type="checkbox" onclick="showPasswords()" th:text="#{signup.show}">
+			<div ><span th:text="#{signup.name}"></span>
+				<input type="text" name="name" pattern="^[a-zA-Zа-яёА-ЯЁ]+$" th:placeholder="#{signup.name.text}" required="required">
+			</div>
+			<div class="line">
+				<div>
+					<label ><span th:text="#{signup.age}"></span><input type="number" name="age" min="1" max="150" required="required">
+					</label>
+				</div>
+				<div ><span th:text="#{signup.male}"></span>
+					<input id="m" type="radio" name="gender" value="male" required>
+					<span th:text="#{signup.female}"></span>
+					<input id="f" type="radio" name="gender" value="female" required>
+				</div>
+			</div>
+			<button type="submit" value="Sign up"><span th:text="#{signup}"></span></button>
+			<a href="/login"><span th:text="#{signup.account}"></span></a>
+		</div>
+	</form>
+	<script type="text/javascript">
+	function check() {
+		var password = document.getElementById("password").value
+		var confirm = document.getElementById("confirm-password").value
+		var msg = document.getElementById("msg")
+
+		if (password != confirm) {
+			msg.innerText = "Password doesn't match!"
+			msg.style = "color: red;"
+			return false
+		} else {
+			msg.innerText = "Password matches!"
+			msg.style = "color: green;"
+		}
+		return true
+	}
+	function showPasswords() {
+		var password = document.getElementById("password")
+		var confirm = document.getElementById("confirm-password")
+		if (password.type === "password") {
+			password.type = "text"
+			confirm.type = "text"
+		} else {
+			password.type = "password"
+			confirm.type = "password"
+		}
+	}
+	</script>
+</body>
+
+</html>
